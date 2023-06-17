@@ -41,7 +41,7 @@ function handleKeyUp(event) {
 }
 
 function makeOpenAIAPIRequest(input) {
-  const prompt = 'Edit the grammar and incorporate a friendly and professional tone in the message provided. You may utilize HTML tags such as <b>, <href>, and <i> where considered necessary to enhance readability, except in the salutation. Additionally, please include an expectation that in the event there is no response, I will follow up no later than tomorrow by 5:00 pm MDT. Apply all these instructions to the following message:\n';
+  const prompt = 'Edit the grammar and incorporate a friendly and professional tone in the message provided. You may utilize HTML tags limited to no more than <b>, <href>, and <i> where considered necessary to enhance readability, except in the salutation. Additionally, please include an expectation that in the event there is no response, I will follow up no later than tomorrow by 5:00 pm MDT. Apply all these instructions to the following message:\n';
   const concatenatedInput = prompt + input;
 
   const requestData = {
