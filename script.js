@@ -1,20 +1,11 @@
 const submitButton = document.getElementById('submit-button');
 const messageInput = document.getElementById('message');
-const animationContainer = document.getElementById('animation-container');
-let animation;
+const responseContainer = document.querySelector('.response-container');
 
-// Load the animation
-lottie.loadAnimation({
-  container: animationContainer,
-  renderer: 'svg',
-  loop: true,
-  autoplay: false,
-  path: '134344-robot.json' // Update the path to your JSON file
-}).then(anim => {
-  animation = anim;
-});
+submitButton.addEventListener('click', handleSubmit);
+messageInput.addEventListener('keyup', handleKeyUp);
 
-submitButton.addEventListener('click', () => {
+function handleSubmit() {
   const userInput = messageInput.value.trim();
   if (userInput === '') return;
 
@@ -22,34 +13,32 @@ submitButton.addEventListener('click', () => {
   submitButton.disabled = true;
   submitButton.value = 'Loading...';
 
-  // Show the animation
-  animationContainer.style.display = 'block';
-  animation.play();
-
   // Make the API call to ChatGPT
   makeChatGPTAPIRequest(userInput)
     .then(answer => {
       console.log('API Response:', answer);
       replaceInputWithResponse(answer);
-      animation.stop();
-      animationContainer.style.display = 'none';
     })
     .catch(error => {
       console.error('Error:', error);
       replaceInputWithResponse('Sorry, something went wrong. Please try again.');
-      animation.stop();
-      animationContainer.style.display = 'none';
     })
     .finally(() => {
       // Enable the submit button and change the text back to 'Submit'
       submitButton.disabled = false;
-      submitButton.value = 'Submit another question';
+      submitButton.value = 'Submit';
     });
-});
+}
+
+function handleKeyUp(event) {
+  if (event.key === 'Enter') {
+    handleSubmit();
+  }
+}
 
 function makeChatGPTAPIRequest(input) {
   // Replace <YOUR_API_KEY> with your actual API key
-  const apiKey = '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';
+  const apiKey = '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';
   const url = `https://api.openai.com/v1/engines/davinci-codex/completions`;
   const headers = {
     'Content-Type': 'application/json',
@@ -79,9 +68,26 @@ function makeChatGPTAPIRequest(input) {
 }
 
 function replaceInputWithResponse(response) {
-  const inputContainer = document.querySelector('.input-container');
   const responseElement = document.createElement('div');
   responseElement.className = 'response';
   responseElement.textContent = response;
-  inputContainer.parentNode.replaceChild(responseElement, inputContainer);
+
+  const resetButton = document.createElement('button');
+  resetButton.id = 'reset-button';
+  resetButton.className = 'submit-button-red'; // Add CSS class for red button style
+  resetButton.textContent = 'Ask Another Question';
+  resetButton.addEventListener('click', handleReset);
+
+  messageInput.style.display = 'none';
+  submitButton.style.display = 'none';
+  responseContainer.innerHTML = '';
+  responseContainer.appendChild(responseElement);
+  responseContainer.appendChild(resetButton);
+}
+
+function handleReset() {
+  messageInput.value = '';
+  messageInput.style.display = 'block';
+  submitButton.style.display = 'block';
+  responseContainer.innerHTML = '';
 }

@@ -2,15 +2,7 @@
 <html>
 <head>
   <link rel="stylesheet" type="text/css" href="styles.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.8/lottie.min.js"></script>
   <script src="script.js" defer></script>
-  <style>
-    #animation-container {
-      width: 200px;
-      height: 200px;
-      margin: 20px auto;
-    }
-  </style>
 </head>
 
 <body>
@@ -24,13 +16,13 @@
       </div>
     </div>
     <div class="input-container">
-      <div id="animation-container"></div>
       <textarea id="message" placeholder="Input your message here"></textarea>
       <input type="submit" value="Submit" id="submit-button">
-      
+      <div class="response-container">
+        <p id="response"></p>
     </div>
   </div>
-
  
+  </div>  
 </body>
 </html>
