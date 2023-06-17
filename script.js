@@ -38,7 +38,7 @@ function handleKeyUp(event) {
 
 function makeChatGPTAPIRequest(input) {
   // Replace <YOUR_API_KEY> with your actual API key
-  const apiKey = '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';
+  const apiKey = '';
   const url = `https://api.openai.com/v1/engines/davinci-codex/completions`;
   const headers = {
     'Content-Type': 'application/json',
