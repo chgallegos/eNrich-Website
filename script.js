@@ -8,14 +8,16 @@ resetButton.className = 'submit-button-red'; // Add CSS class for red button sty
 resetButton.textContent = 'Ask Another Question';
 resetButton.addEventListener('click', handleReset);
 
+// Replace 'YOUR_API_KEY' with your actual OpenAI API key
+const apiKey = '';
+const engine = 'text-davinci-003';
+
 submitButton.addEventListener('click', handleSubmit);
 messageInput.addEventListener('keyup', handleKeyUp);
 
 const loadingMessage = "Chill out. I'm thinking";
 const loadingAnimationDelay = 500; // Delay between each dot (in milliseconds)
 let loadingAnimationInterval;
-
-const engine = 'davinci'; // Define the OpenAI engine
 
 function handleSubmit() {
   const userInput = messageInput.value.trim();
@@ -62,7 +64,7 @@ function makeOpenAIAPIRequest(input) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${getAPIKey()}` // Use the workaround function to get the API key
+      'Authorization': `Bearer ${apiKey}`
     },
     body: JSON.stringify(requestData)
   })
@@ -75,14 +77,6 @@ function makeOpenAIAPIRequest(input) {
         throw new Error('Invalid API response');
       }
     });
-}
-
-function getAPIKey() {
-  if ('OPENAI_API_KEY' in process.env) {
-    return process.env.OPENAI_API_KEY;
-  } else {
-    throw new Error('OpenAI API key not found');
-  }
 }
 
 function typeWriterLoadingMessage(message) {
