@@ -9,7 +9,7 @@ resetButton.textContent = 'Ask Another Question';
 resetButton.addEventListener('click', handleReset);
 
 // Replace 'YOUR_API_KEY' with your actual OpenAI API key
-const apiKey = '';
+const apiKey = 'YOUR_API_KEY';
 const engine = 'text-davinci-003';
 
 submitButton.addEventListener('click', handleSubmit);
