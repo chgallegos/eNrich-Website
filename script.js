@@ -17,9 +17,6 @@ let loadingAnimationInterval;
 
 const engine = 'davinci'; // Define the OpenAI engine
 
-// Retrieve the API key from the environment variable
-const apiKey = process.env.OPENAI_API_KEY;
-
 function handleSubmit() {
   const userInput = messageInput.value.trim();
   if (userInput === '') return;
@@ -65,7 +62,7 @@ function makeOpenAIAPIRequest(input) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${apiKey}` // Use the API key retrieved from environment variables
+      'Authorization': `Bearer ${getAPIKey()}` // Use the workaround function to get the API key
     },
     body: JSON.stringify(requestData)
   })
@@ -78,6 +75,14 @@ function makeOpenAIAPIRequest(input) {
         throw new Error('Invalid API response');
       }
     });
+}
+
+function getAPIKey() {
+  if ('OPENAI_API_KEY' in process.env) {
+    return process.env.OPENAI_API_KEY;
+  } else {
+    throw new Error('OpenAI API key not found');
+  }
 }
 
 function typeWriterLoadingMessage(message) {
@@ -155,6 +160,3 @@ function handleReset() {
   responseContainer.innerHTML = '';
   stopLoadingAnimation();
 }
-
-
-
