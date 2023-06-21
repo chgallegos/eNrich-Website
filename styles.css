@@ -117,8 +117,17 @@ button.submit-button-red {
   justify-content: center;
   text-align: center;
   padding: 20px;
+  max-width: 100%;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  overflow: auto;
+  max-height: 300px; /* Adjust the max-height value as needed */
 }
 
 .response {
   margin-bottom: 20px;
+}
+
+#reset-button {
+  margin-top: 20px;
 }
