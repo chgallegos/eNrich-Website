@@ -15,6 +15,8 @@ const loadingMessage = "Chill out. I'm thinking";
 const loadingAnimationDelay = 500; // Delay between each dot (in milliseconds)
 let loadingAnimationInterval;
 
+const engine = 'davinci'; // Define the OpenAI engine
+
 function handleSubmit() {
   const userInput = messageInput.value.trim();
   if (userInput === '') return;
