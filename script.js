@@ -8,10 +8,6 @@ resetButton.className = 'submit-button-red'; // Add CSS class for red button sty
 resetButton.textContent = 'Ask Another Question';
 resetButton.addEventListener('click', handleReset);
 
-// Replace 'YOUR_API_KEY' with your actual OpenAI API key
-const apiKey = 'YOUR_API_KEY';
-const engine = 'text-davinci-003';
-
 submitButton.addEventListener('click', handleSubmit);
 messageInput.addEventListener('keyup', handleKeyUp);
 
@@ -64,7 +60,7 @@ function makeOpenAIAPIRequest(input) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${apiKey}`
+      'Authorization': `Bearer ${process.env.OPENAI_API_KEY}` // Use process.env.OPENAI_API_KEY here
     },
     body: JSON.stringify(requestData)
   })
