@@ -58,11 +58,13 @@ function makeOpenAIAPIRequest(input) {
     temperature: 0.0
   };
 
+  const apiKey = process.env.OPENAI_API_KEY; // Get the API key from environment variable
+
   return fetch(`https://api.openai.com/v1/engines/${engine}/completions`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${process.env.OPENAI_API_KEY}` // Use process.env.OPENAI_API_KEY here
+      'Authorization': `Bearer ${apiKey}` // Use the API key here
     },
     body: JSON.stringify(requestData)
   })
