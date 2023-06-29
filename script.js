@@ -32,10 +32,10 @@ function handleSubmit() {
 
   // Make the API call to OpenAI
   makeOpenAIAPIRequest(userInput)
-    .then(answer => {
-      console.log('API Response:', answer);
+    .then(response => {
+      console.log('API Response:', response);
       stopLoadingAnimation();
-      typeWriter(answer);
+      typeWriter(response);
     })
     .catch(error => {
       console.error('Error:', error);
@@ -51,12 +51,12 @@ function handleKeyUp(event) {
 }
 
 function makeOpenAIAPIRequest(input) {
-  const prompt = 'Edit the grammar and incorporate a friendly and professional tone in the message provided. You may utilize HTML tags limited to no more than <b>, <href>, and <i> where considered necessary to enhance readability, except in the salutation. Additionally, please include an expectation that in the event there is no response, I will follow up no later than tomorrow by 5:00 pm MDT. Apply all these instructions to the following message:\n';
+  const prompt = "Please edit the grammar and ensure a friendly and professional tone in the provided message. Feel free to use formatting, such as bold, and italic to emphasize important points and enhance readability (except in the salutation). Additionally, kindly include an expectation that if there is no response from them today, I will follow up no later than tomorrow by 5:00 pm MDT. Please begin the message with a greeting expressing gratitude for their previous response. Please limit your response to only include the content from the greeting onward. Please apply these instructions to the following message:";
   const concatenatedInput = prompt + input;
 
   const requestData = {
     prompt: concatenatedInput,
-    max_tokens: 200,
+    max_tokens: 600,
     temperature: 0.0
   };
 
@@ -72,7 +72,9 @@ function makeOpenAIAPIRequest(input) {
     .then(data => {
       const { choices } = data;
       if (choices && choices.length > 0) {
-        return choices[0].text.trim();
+        const responseText = choices[0].text.trim();
+        const startIndex = responseText.indexOf('Dear');
+        return responseText.substring(startIndex);
       } else {
         throw new Error('Invalid API response');
       }
