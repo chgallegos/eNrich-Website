@@ -66,6 +66,16 @@ h1 {
   margin-bottom: 20px;
 }
 
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.checkbox-container input[type="checkbox"] {
+  margin-right: 10px;
+}
+
 textarea#message {
   width: calc(100% - 35px);
   min-height: 100px;
@@ -121,7 +131,7 @@ button.submit-button-red {
   word-break: break-word;
   overflow-wrap: break-word;
   overflow: auto;
-  max-height: 300px; /* Adjust the max-height value as needed */
+  flex-grow: 1;
 }
 
 .response {
@@ -130,4 +140,28 @@ button.submit-button-red {
 
 #reset-button {
   margin-top: 20px;
+}
+
+.loading-animation {
+  display: inline-block;
+  animation: loading 1s infinite;
+}
+
+@keyframes loading {
+  0% {
+    content: "";
+  }
+  25% {
+    content: ".";
+  }
+  50% {
+    content: "..";
+  }
+  75% {
+    content: "...";
+  }
+}
+
+.soft-background {
+  background-color: #f2f2f2; /* Soft gray background color */
 }
