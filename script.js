@@ -103,14 +103,11 @@ document.addEventListener('DOMContentLoaded', function() {
       temperature: 0.0
     };
 
-    return fetch(`https://api.openai.com/v1/engines/${engine}/completions`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`
-      },
-      body: JSON.stringify(requestData)
-    })
+    return fetch('/ask', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(requestData)
+  })
       .then(response => response.json())
       .then(data => {
         const { choices } = data;
