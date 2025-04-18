@@ -30,7 +30,7 @@ app.post('/ask', async (req, res) => {
 });
 
 // Serve static files
-app.use(express.static('eNrich-Website'));
+app.use(express.static('eNrich'));
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
