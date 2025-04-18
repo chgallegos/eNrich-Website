@@ -22,9 +22,18 @@ document.addEventListener('DOMContentLoaded', function() {
   resetButton.textContent = 'Ask Another Question';
   resetButton.addEventListener('click', handleReset);
 
-  // Replace 'YOUR_API_KEY' with your actual OpenAI API key
-  const apiKey = '';
+  let apiKey = ''; // Declare variable for the API key
   const engine = 'text-davinci-003';
+
+  // Fetch API Key from the backend route
+  fetch('/get-api-key') // This assumes you have the backend route '/get-api-key' set up
+    .then(response => response.json())
+    .then(data => {
+      apiKey = data.apiKey;  // Set the API key when it's fetched
+    })
+    .catch(error => {
+      console.error('Error fetching the API key:', error);
+    });
 
   submitButton.addEventListener('click', handleSubmit);
   messageInput.addEventListener('keyup', handleKeyUp);
@@ -48,17 +57,21 @@ document.addEventListener('DOMContentLoaded', function() {
     typeWriterLoadingMessage(loadingMessage);
 
     // Make the API call to OpenAI
-    makeOpenAIAPIRequest(userInput)
-      .then(response => {
-        console.log('API Response:', response);
-        stopLoadingAnimation();
-        typeWriter(response);
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        stopLoadingAnimation();
-        replaceInputWithResponse('Sorry, something went wrong. Please try again.');
-      });
+    if (apiKey) {
+      makeOpenAIAPIRequest(userInput)
+        .then(response => {
+          console.log('API Response:', response);
+          stopLoadingAnimation();
+          typeWriter(response);
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          stopLoadingAnimation();
+          replaceInputWithResponse('Sorry, something went wrong. Please try again.');
+        });
+    } else {
+      console.error('API key is missing!');
+    }
   }
 
   function handleKeyUp(event) {
@@ -111,6 +124,7 @@ document.addEventListener('DOMContentLoaded', function() {
       });
   }
 
+  // Helper functions for typewriter effect, loading animation, and reset button
   function typeWriterLoadingMessage(message) {
     let i = 0;
     const typingDelay = 100; // Adjust the delay for faster typing
